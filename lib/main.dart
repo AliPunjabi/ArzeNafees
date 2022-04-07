@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:arzenafees/Constants.dart';
 import 'package:arzenafees/Screens/homescreen.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +13,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Splash Screen',
       theme: ThemeData(
-        primarySwatch: Colors.red,
+        colorScheme: ColorScheme.fromSwatch().copyWith(
+          primary: Constants.colorMain,
+          secondary: Constants.colorSecond,
+        ),
       ),
       home: MyHomePage(),
       debugShowCheckedModeBanner: false,
