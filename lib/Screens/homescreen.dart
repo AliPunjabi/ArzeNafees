@@ -15,10 +15,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Constants.coloroffWhite,
       appBar: AppBar(
           elevation: 0,
-          backgroundColor: Constants.colorSecond,
+          backgroundColor: Constants.coloroffWhite,
           title: Padding(
             padding: EdgeInsets.only(left: 43.0),
             child: Row(
@@ -81,24 +81,34 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         Padding(
           padding: const EdgeInsets.all(20.0),
-          child: ToggleSwitch(
-            minWidth: 150.0,
-            minHeight: 60,
-            cornerRadius: 12.0,
-            activeBgColors: [
-              [Constants.colorMain],
-              [Colors.yellow]
-            ],
-            activeFgColor: Colors.white,
-            inactiveBgColor: Colors.grey,
-            inactiveFgColor: Colors.white,
-            initialLabelIndex: 1,
-            totalSwitches: 2,
-            labels: ['Buy', 'Rent'],
-            radiusStyle: true,
-            onToggle: (index) {
-              print('switched to: $index');
-            },
+          child: Card(
+            elevation: 2,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15.0)),
+            child: ToggleSwitch(
+              fontSize: 18,
+              minWidth: 150.0,
+              minHeight: 60,
+              cornerRadius: 12.0,
+              activeBgColors: [
+                [Constants.colorMain],
+                [Constants.colorMain]
+              ],
+              inactiveBgColor: Constants.colorSecond,
+              activeFgColor: Constants.colorSecond,
+              inactiveFgColor: Colors.black54,
+              initialLabelIndex: 0,
+              totalSwitches: 2,
+              labels: ['Buy', 'Rent'],
+              customTextStyles: [
+                TextStyle(fontWeight: FontWeight.bold),
+                TextStyle(fontWeight: FontWeight.bold)
+              ],
+              radiusStyle: true,
+              onToggle: (index) {
+                print('switched to: $index');
+              },
+            ),
           ),
         ),
         SizedBox(
@@ -149,10 +159,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   child: Column(
                     children: <Widget>[
-                      Icon(
-                        Icons.home,
-                        color: Constants.colorMain,
-                        size: 80,
+                      Image.asset(
+                        'assets/images/home.png',
+                        fit: BoxFit.contain,
+                        height: 82,
                       ),
                       Text(
                         'Sell Property',
@@ -177,10 +187,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   child: Column(
                     children: <Widget>[
-                      Icon(
-                        Icons.home,
-                        color: Constants.colorMain,
-                        size: 80,
+                      Padding(
+                        padding: const EdgeInsets.only(top: 0.0),
+                        child: Image.asset(
+                          'assets/images/progress.png',
+                          fit: BoxFit.contain,
+                          height: 82,
+                        ),
                       ),
                       Text(
                         'Investment',

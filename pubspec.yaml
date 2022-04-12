@@ -61,6 +61,7 @@ flutter:
   assets:
     - assets/images/Splash screen.jpg
     - assets/images/logo.png
+    - assets/images/
   fonts:
     - family: Roboto
       fonts:
