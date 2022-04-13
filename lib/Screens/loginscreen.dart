@@ -6,6 +6,8 @@ import 'package:arzenafees/Components/custom_elevated_button.dart';
 import 'package:arzenafees/Components/custom_text_field.dart';
 import 'package:arzenafees/Components/transitions.dart';
 import 'package:arzenafees/Components/Constants.dart';
+import 'package:arzenafees/Screens/signupscreen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:arzenafees/Screens/homescreen.dart';
 
@@ -17,6 +19,8 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   bool isRememberMe = false;
   final bool _passwordVisible = true;
+  bool showSpinner = false;
+  final _auth = FirebaseAuth.instance;
 
   final _textEmail = TextEditingController();
   final _textPassword = TextEditingController();
@@ -132,8 +136,33 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: CustomElevatedButton(
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
-                                Constants.checkNetwork().whenComplete(() {
-                                  {}
+                                Constants.checkNetwork().whenComplete(() async {
+                                  {
+                                    setState(() {
+                                      showSpinner = true;
+                                    });
+                                    try {
+                                      final newUser = await _auth
+                                          .signInWithEmailAndPassword(
+                                              email: _textEmail.text,
+                                              password: _textPassword.text);
+                                      if (newUser != null) {
+                                        Navigator.of(context).push(
+                                          Transitions(
+                                              transitionType:
+                                                  TransitionType.fade,
+                                              curve: Curves.bounceInOut,
+                                              reverseCurve: Curves.bounceOut,
+                                              widget: HomeScreen()),
+                                        );
+                                      }
+                                    } catch (e) {
+                                      print(e);
+                                    }
+                                    setState(() {
+                                      showSpinner = false;
+                                    });
+                                  }
                                 });
                               }
                             },
@@ -147,10 +176,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       onTap: () {
                         Navigator.of(context).push(
                           Transitions(
-                            transitionType: TransitionType.fade,
-                            curve: Curves.bounceInOut,
-                            reverseCurve: Curves.bounceOut,
-                          ),
+                              transitionType: TransitionType.fade,
+                              curve: Curves.bounceInOut,
+                              reverseCurve: Curves.bounceOut,
+                              widget: SignupScreen()),
                         );
                       },
                       child: Row(
