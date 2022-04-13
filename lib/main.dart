@@ -1,11 +1,16 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'dart:async';
 import 'package:arzenafees/Components/Constants.dart';
 import 'package:arzenafees/Components/transitions.dart';
 import 'package:arzenafees/Screens/homescreen.dart';
 import 'package:arzenafees/Screens/loginscreen.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -52,7 +57,10 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        color: Colors.white,
-        child: Image.asset('assets/images/Splash screen.jpg'));
+        decoration: BoxDecoration(
+            image: DecorationImage(
+      fit: BoxFit.fill,
+      image: AssetImage('assets/images/Splash screen.jpg'),
+    )));
   }
 }

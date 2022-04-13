@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "578980071175",
+    "project_id": "arz-e-nafees-ecad0",
+    "storage_bucket": "arz-e-nafees-ecad0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:578980071175:android:7187c8d8412637b0d3e7a2",
+        "android_client_info": {
+          "package_name": "com.example.arzenafees"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "578980071175-do0kb8dml8l5vksjmqdsknu52gd2h3ga.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSn-vniPQtpKijL0J7O7XXRx73yZGkSUU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "578980071175-do0kb8dml8l5vksjmqdsknu52gd2h3ga.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
