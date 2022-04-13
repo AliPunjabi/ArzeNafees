@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, import_of_legacy_library_into_null_safe
 
 import 'package:arzenafees/Components/app_lable_widget.dart';
 import 'package:arzenafees/Components/card_password_textfield.dart';
@@ -134,7 +134,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       children: [
                         Expanded(
                           child: CustomElevatedButton(
-                            onPressed: () {
+                            onPressed: () async {
                               if (_formKey.currentState!.validate()) {
                                 Constants.checkNetwork().whenComplete(() async {
                                   {
@@ -152,6 +152,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                               transitionType:
                                                   TransitionType.fade,
                                               curve: Curves.bounceInOut,
+                                              duration: const Duration(
+                                                  milliseconds: 500),
                                               reverseCurve: Curves.bounceOut,
                                               widget: HomeScreen()),
                                         );

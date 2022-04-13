@@ -118,7 +118,7 @@ class _LoginScreenState extends State<SignupScreen> {
                       children: [
                         Expanded(
                           child: CustomElevatedButton(
-                            onPressed: () {
+                            onPressed: () async {
                               if (_formKey.currentState!.validate()) {
                                 Constants.checkNetwork().whenComplete(() async {
                                   {
@@ -141,6 +141,14 @@ class _LoginScreenState extends State<SignupScreen> {
                                         );
                                       }
                                     } catch (e) {
+                                      var snackBar = SnackBar(
+                                        content: Text(e.toString()),
+                                      );
+
+// Find the ScaffoldMessenger in the widget tree
+// and use it to show a SnackBar.
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(snackBar);
                                       print(e);
                                     }
                                     setState(() {
@@ -158,11 +166,12 @@ class _LoginScreenState extends State<SignupScreen> {
                     const SizedBox(height: 30.0),
                     GestureDetector(
                       onTap: () {
-                        Navigator.of(context).push(
+                        Navigator.of(context).pushReplacement(
                           Transitions(
                               transitionType: TransitionType.fade,
                               curve: Curves.bounceInOut,
                               reverseCurve: Curves.bounceOut,
+                              duration: const Duration(milliseconds: 500),
                               widget: LoginScreen()),
                         );
                       },
