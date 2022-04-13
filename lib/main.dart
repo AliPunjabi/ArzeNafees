@@ -1,6 +1,8 @@
 import 'dart:async';
-import 'package:arzenafees/Constants.dart';
+import 'package:arzenafees/Components/Constants.dart';
+import 'package:arzenafees/Components/transitions.dart';
 import 'package:arzenafees/Screens/homescreen.dart';
+import 'package:arzenafees/Screens/loginscreen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -36,7 +38,15 @@ class _MyHomePageState extends State<MyHomePage> {
     Timer(
         Duration(seconds: 3),
         () => Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => HomeScreen())));
+              context,
+              Transitions(
+                transitionType: TransitionType.fade,
+                curve: Curves.easeInOut,
+                duration: const Duration(milliseconds: 1000),
+                reverseCurve: Curves.easeInOut,
+                widget: LoginScreen(),
+              ),
+            ));
   }
 
   @override
