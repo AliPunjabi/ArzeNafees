@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, import_of_legacy_library_into_null_safe
+// ignore_for_file: prefer_const_constructors, import_of_legacy_library_into_null_safe, unused_element
 
 import 'package:arzenafees/Components/app_lable_widget.dart';
 import 'package:arzenafees/Components/card_password_textfield.dart';
@@ -6,18 +6,18 @@ import 'package:arzenafees/Components/custom_elevated_button.dart';
 import 'package:arzenafees/Components/custom_text_field.dart';
 import 'package:arzenafees/Components/transitions.dart';
 import 'package:arzenafees/Components/Constants.dart';
-import 'package:arzenafees/Screens/forgotpasswordscreen.dart';
+import 'package:arzenafees/Screens/loginscreen.dart';
 import 'package:arzenafees/Screens/signupscreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:arzenafees/Screens/homescreen.dart';
 
-class LoginScreen extends StatefulWidget {
+class ForgotScreen extends StatefulWidget {
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<ForgotScreen> createState() => _ForgotScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _ForgotScreenState extends State<ForgotScreen> {
   bool isRememberMe = false;
   final bool _passwordVisible = true;
   bool showSpinner = false;
@@ -64,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     SizedBox(height: 50),
                     Text(
-                      'Login',
+                      'Forgot Password',
                       style: TextStyle(
                         color: const Color(0xFF03041D),
                         fontSize: 30.0,
@@ -75,7 +75,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     const SizedBox(height: 10),
                     const Text(
-                      'Welcome back you\'ve been missed!',
+                      'Enter an email to reset your password',
                       style: TextStyle(
                         color: Color(0xFF03041D),
                         fontSize: 16.0,
@@ -97,39 +97,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       validator: validateEmail,
                     ),
                     const SizedBox(height: 10),
-                    AppLabelWidget(
-                      title: 'Password',
-                    ),
-                    CardPasswordTextFieldWidget(
-                        textEditingController: _textPassword,
-                        validator: validatePassword,
-                        hintText: 'Enter Your Password',
-                        isPasswordVisible: _passwordVisible),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 10.0),
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).push(
-                              Transitions(
-                                  transitionType: TransitionType.fade,
-                                  curve: Curves.bounceInOut,
-                                  reverseCurve: Curves.bounceOut,
-                                  widget: ForgotScreen()),
-                            );
-                          },
-                          child: Text(
-                            'Forgot Password',
-                            style: TextStyle(
-                              fontFamily: Constants.appFont,
-                              fontSize: 16,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
                     const SizedBox(height: 40),
                     Row(
                       children: [
@@ -139,37 +106,68 @@ class _LoginScreenState extends State<LoginScreen> {
                               if (_formKey.currentState!.validate()) {
                                 Constants.checkNetwork().whenComplete(() async {
                                   {
-                                    setState(() {
-                                      showSpinner = true;
-                                    });
+                                    showLoaderDialog(BuildContext context) {
+                                      AlertDialog alert = AlertDialog(
+                                        // ignore: unnecessary_new
+                                        content: new Row(
+                                          children: [
+                                            CircularProgressIndicator(),
+                                            Container(
+                                                margin:
+                                                    EdgeInsets.only(left: 7),
+                                                child: Text("Loading...")),
+                                          ],
+                                        ),
+                                      );
+                                      showDialog(
+                                        barrierDismissible: false,
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return alert;
+                                        },
+                                      );
+                                    }
+
                                     try {
-                                      final newUser = await _auth
-                                          .signInWithEmailAndPassword(
-                                              email: _textEmail.text,
-                                              password: _textPassword.text);
-                                      if (newUser != null) {
-                                        Navigator.of(context).push(
-                                          Transitions(
-                                              transitionType:
-                                                  TransitionType.fade,
-                                              curve: Curves.bounceInOut,
-                                              duration: const Duration(
-                                                  milliseconds: 500),
-                                              reverseCurve: Curves.bounceOut,
-                                              widget: HomeScreen()),
-                                        );
-                                      }
+                                      await _auth.sendPasswordResetEmail(
+                                        email: _textEmail.text,
+                                      );
+                                      var snackBar = SnackBar(
+                                        content:
+                                            Text('Password Reset Email Sent'),
+                                      );
+
+// Find the ScaffoldMessenger in the widget tree
+// and use it to show a SnackBar.
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(snackBar);
+                                      Navigator.pop(context);
+
+                                      Navigator.of(context).push(
+                                        Transitions(
+                                            transitionType: TransitionType.fade,
+                                            curve: Curves.bounceInOut,
+                                            duration: const Duration(
+                                                milliseconds: 500),
+                                            reverseCurve: Curves.bounceOut,
+                                            widget: LoginScreen()),
+                                      );
                                     } catch (e) {
+                                      var snackBar = SnackBar(
+                                        content: Text(e.toString()),
+                                      );
+
+// Find the ScaffoldMessenger in the widget tree
+// and use it to show a SnackBar.
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(snackBar);
                                       print(e);
                                     }
-                                    setState(() {
-                                      showSpinner = false;
-                                    });
                                   }
                                 });
                               }
                             },
-                            buttonLabel: 'Login',
+                            buttonLabel: 'Reset Password',
                           ),
                         ),
                       ],
@@ -224,18 +222,6 @@ class _LoginScreenState extends State<LoginScreen> {
       return 'Email Required';
     } else if (!regex.hasMatch(value)) {
       return 'Enter valid email';
-    } else {
-      return null;
-    }
-  }
-
-  String? validatePassword(String? value) {
-    Pattern pattern = r'^(?=.*?[a-z])(?=.*?[0-9]).{8,}$';
-    RegExp regex = RegExp(pattern as String);
-    if (value!.isEmpty) {
-      return 'Password Required';
-    } else if (!regex.hasMatch(value)) {
-      return 'Enter Valid Password';
     } else {
       return null;
     }
