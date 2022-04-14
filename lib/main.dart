@@ -1,12 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'dart:async';
-import 'package:arzenafees/Components/Constants.dart';
-import 'package:arzenafees/Components/transitions.dart';
-import 'package:arzenafees/Screens/homescreen.dart';
-import 'package:arzenafees/Screens/loginscreen.dart';
-import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:arzenafees/Components/Export/custom_import.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
