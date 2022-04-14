@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 
 class CustomElevatedButton extends StatelessWidget {
   const CustomElevatedButton(
-      {required this.buttonLabel, required this.onPressed, Key? key})
+      {required this.onPressed, required this.child, Key? key})
       : super(key: key);
-  final String buttonLabel;
-  final Function()? onPressed;
 
+  final Function()? onPressed;
+  final Widget child;
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
@@ -19,14 +19,7 @@ class CustomElevatedButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(15.0),
         ),
       ),
-      child: Text(
-        buttonLabel,
-        style: TextStyle(
-            fontFamily: Constants.appFont,
-            fontWeight: FontWeight.w900,
-            color: Constants.colorSecond,
-            fontSize: 16.0),
-      ),
+      child: child,
       onPressed: onPressed,
     );
   }

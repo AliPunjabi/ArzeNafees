@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors, import_of_legacy_library_into_null_safe, unused_element
 
 import 'package:arzenafees/Components/app_lable_widget.dart';
-import 'package:arzenafees/Components/card_password_textfield.dart';
+
 import 'package:arzenafees/Components/custom_elevated_button.dart';
 import 'package:arzenafees/Components/custom_text_field.dart';
 import 'package:arzenafees/Components/transitions.dart';
@@ -10,7 +10,6 @@ import 'package:arzenafees/Screens/loginscreen.dart';
 import 'package:arzenafees/Screens/signupscreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:arzenafees/Screens/homescreen.dart';
 
 class ForgotScreen extends StatefulWidget {
   @override
@@ -19,12 +18,12 @@ class ForgotScreen extends StatefulWidget {
 
 class _ForgotScreenState extends State<ForgotScreen> {
   bool isRememberMe = false;
-  final bool _passwordVisible = true;
-  bool showSpinner = false;
+
+  bool isLoading = false;
   final _auth = FirebaseAuth.instance;
 
   final _textEmail = TextEditingController();
-  final _textPassword = TextEditingController();
+
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -106,41 +105,34 @@ class _ForgotScreenState extends State<ForgotScreen> {
                               if (_formKey.currentState!.validate()) {
                                 Constants.checkNetwork().whenComplete(() async {
                                   {
-                                    showLoaderDialog(BuildContext context) {
-                                      AlertDialog alert = AlertDialog(
-                                        // ignore: unnecessary_new
-                                        content: new Row(
-                                          children: [
-                                            CircularProgressIndicator(),
-                                            Container(
-                                                margin:
-                                                    EdgeInsets.only(left: 7),
-                                                child: Text("Loading...")),
-                                          ],
-                                        ),
-                                      );
-                                      showDialog(
-                                        barrierDismissible: false,
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return alert;
-                                        },
-                                      );
-                                    }
+                                    setState(() {
+                                      isLoading = true;
+                                    });
 
                                     try {
                                       await _auth.sendPasswordResetEmail(
                                         email: _textEmail.text,
                                       );
-                                      var snackBar = SnackBar(
-                                        content:
-                                            Text('Password Reset Email Sent'),
-                                      );
-
-// Find the ScaffoldMessenger in the widget tree
-// and use it to show a SnackBar.
+                                      setState(() {
+                                        isLoading = false;
+                                      });
                                       ScaffoldMessenger.of(context)
-                                          .showSnackBar(snackBar);
+                                          .showSnackBar(SnackBar(
+                                        content:
+                                            Text('Reset Password Email Sent'),
+                                        behavior: SnackBarBehavior.floating,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(14),
+                                        ),
+                                        margin: EdgeInsets.only(
+                                            bottom: MediaQuery.of(context)
+                                                    .size
+                                                    .height -
+                                                100,
+                                            right: 20,
+                                            left: 20),
+                                      ));
                                       Navigator.pop(context);
 
                                       Navigator.of(context).push(
@@ -153,21 +145,48 @@ class _ForgotScreenState extends State<ForgotScreen> {
                                             widget: LoginScreen()),
                                       );
                                     } catch (e) {
-                                      var snackBar = SnackBar(
-                                        content: Text(e.toString()),
-                                      );
-
-// Find the ScaffoldMessenger in the widget tree
-// and use it to show a SnackBar.
                                       ScaffoldMessenger.of(context)
-                                          .showSnackBar(snackBar);
+                                          .showSnackBar(SnackBar(
+                                        content: Text(e.toString()),
+                                        behavior: SnackBarBehavior.floating,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(14),
+                                        ),
+                                        margin: EdgeInsets.only(
+                                            bottom: MediaQuery.of(context)
+                                                    .size
+                                                    .height -
+                                                100,
+                                            right: 20,
+                                            left: 20),
+                                      ));
+                                      Navigator.pop(context);
                                       print(e);
                                     }
                                   }
                                 });
                               }
                             },
-                            buttonLabel: 'Reset Password',
+                            child: isLoading
+                                ? Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+
+                                    // ignore: prefer_const_literals_to_create_immutables
+                                    children: [
+                                      const Text(
+                                        'Loading...',
+                                        style: TextStyle(fontSize: 20),
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      const CircularProgressIndicator(
+                                        color: Colors.white,
+                                      ),
+                                    ],
+                                  )
+                                : const Text('Reset Password'),
                           ),
                         ),
                       ],

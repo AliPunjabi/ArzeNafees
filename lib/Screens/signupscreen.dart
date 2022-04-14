@@ -18,7 +18,7 @@ class SignupScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<SignupScreen> {
   final bool _passwordVisible = true;
-  bool showSpinner = false;
+  bool isLoading = false;
   final _auth = FirebaseAuth.instance;
 
   final _textEmail = TextEditingController();
@@ -123,13 +123,16 @@ class _LoginScreenState extends State<SignupScreen> {
                                 Constants.checkNetwork().whenComplete(() async {
                                   {
                                     setState(() {
-                                      showSpinner = true;
+                                      isLoading = true;
                                     });
                                     try {
                                       final newUser = await _auth
                                           .createUserWithEmailAndPassword(
                                               email: _textEmail.text,
                                               password: _textPassword.text);
+                                      setState(() {
+                                        isLoading = false;
+                                      });
                                       if (newUser != null) {
                                         Navigator.of(context).push(
                                           Transitions(
@@ -141,24 +144,48 @@ class _LoginScreenState extends State<SignupScreen> {
                                         );
                                       }
                                     } catch (e) {
-                                      var snackBar = SnackBar(
-                                        content: Text(e.toString()),
-                                      );
-
-// Find the ScaffoldMessenger in the widget tree
-// and use it to show a SnackBar.
                                       ScaffoldMessenger.of(context)
-                                          .showSnackBar(snackBar);
+                                          .showSnackBar(SnackBar(
+                                        content: Text(e.toString()),
+                                        behavior: SnackBarBehavior.floating,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(14),
+                                        ),
+                                        margin: EdgeInsets.only(
+                                            bottom: MediaQuery.of(context)
+                                                    .size
+                                                    .height -
+                                                100,
+                                            right: 20,
+                                            left: 20),
+                                      ));
+                                      Navigator.pop(context);
                                       print(e);
                                     }
-                                    setState(() {
-                                      showSpinner = false;
-                                    });
                                   }
                                 });
                               }
                             },
-                            buttonLabel: 'Sign Up',
+                            child: isLoading
+                                ? Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+
+                                    // ignore: prefer_const_literals_to_create_immutables
+                                    children: [
+                                      const Text(
+                                        'Loading...',
+                                        style: TextStyle(fontSize: 20),
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      const CircularProgressIndicator(
+                                        color: Colors.white,
+                                      ),
+                                    ],
+                                  )
+                                : const Text('Sign up'),
                           ),
                         ),
                       ],

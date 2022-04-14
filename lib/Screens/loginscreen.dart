@@ -19,8 +19,9 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool isRememberMe = false;
+  bool isLoading = false;
   final bool _passwordVisible = true;
-  bool showSpinner = false;
+
   final _auth = FirebaseAuth.instance;
 
   final _textEmail = TextEditingController();
@@ -140,13 +141,16 @@ class _LoginScreenState extends State<LoginScreen> {
                                 Constants.checkNetwork().whenComplete(() async {
                                   {
                                     setState(() {
-                                      showSpinner = true;
+                                      isLoading = true;
                                     });
                                     try {
                                       final newUser = await _auth
                                           .signInWithEmailAndPassword(
                                               email: _textEmail.text,
                                               password: _textPassword.text);
+                                      setState(() {
+                                        isLoading = false;
+                                      });
                                       if (newUser != null) {
                                         Navigator.of(context).push(
                                           Transitions(
@@ -159,17 +163,51 @@ class _LoginScreenState extends State<LoginScreen> {
                                               widget: HomeScreen()),
                                         );
                                       }
-                                    } catch (e) {
+                                    } on FirebaseAuthException catch (e) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(SnackBar(
+                                        content: Text(e.message.toString()),
+                                        behavior: SnackBarBehavior.floating,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(14),
+                                        ),
+                                        margin: EdgeInsets.only(
+                                            bottom: MediaQuery.of(context)
+                                                    .size
+                                                    .height -
+                                                100,
+                                            right: 20,
+                                            left: 20),
+                                      ));
+                                      setState(() {
+                                        isLoading = false;
+                                      });
                                       print(e);
                                     }
-                                    setState(() {
-                                      showSpinner = false;
-                                    });
                                   }
                                 });
                               }
                             },
-                            buttonLabel: 'Login',
+                            child: isLoading
+                                ? Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+
+                                    // ignore: prefer_const_literals_to_create_immutables
+                                    children: [
+                                      const Text(
+                                        'Loading...',
+                                        style: TextStyle(fontSize: 20),
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      const CircularProgressIndicator(
+                                        color: Colors.white,
+                                      ),
+                                    ],
+                                  )
+                                : const Text('Login'),
                           ),
                         ),
                       ],
