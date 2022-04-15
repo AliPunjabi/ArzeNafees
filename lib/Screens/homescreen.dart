@@ -12,7 +12,73 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Constants.coloroffWhite,
+      drawer: Padding(
+        padding: const EdgeInsets.fromLTRB(0, 80, 0, 0),
+        child: Drawer(
+          child: Column(
+            children: [
+              Container(
+                color: Color.fromARGB(255, 240, 214, 214),
+                child: ListTile(
+                  leading: Icon(Icons.home_sharp, color: Constants.colorMain),
+                  title: Text(
+                    'Home',
+                    style: TextStyle(color: Constants.colorMain),
+                  ),
+                ),
+              ),
+              ListTile(
+                leading: Icon(Icons.local_fire_department,
+                    color: Constants.colorMain),
+                title: Text('Listening'),
+              ),
+              ListTile(
+                leading: Icon(Icons.phone_callback, color: Constants.colorMain),
+                title: Text('Contact Us'),
+              ),
+              ListTile(
+                leading: Icon(Icons.feedback_sharp, color: Constants.colorMain),
+                title: Text('Feedback'),
+              ),
+              ListTile(
+                leading: Icon(Icons.logout, color: Constants.colorMain),
+                title: Text('Logout'),
+              ),
+              SizedBox(
+                height: 40,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    'assets/images/logo.png',
+                    fit: BoxFit.contain,
+                    height: 32,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "ARZ E NAFEES",
+                      style: TextStyle(
+                          fontFamily: 'Roboto',
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          color: Constants.colorMain),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Text('All rights reserved Copyright @ 2021 2022',
+                  style: TextStyle(color: Colors.grey, fontSize: 6))
+            ],
+          ),
+        ),
+      ),
       appBar: AppBar(
+          iconTheme: IconThemeData(color: Constants.colorMain),
           elevation: 0,
           backgroundColor: Constants.coloroffWhite,
           title: Padding(
@@ -38,12 +104,11 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
-          automaticallyImplyLeading: false,
-          leading: GestureDetector(
-            onTap: () {},
-            child: Icon(
-              Icons.list_sharp,
-              color: Colors.black,
+          //automaticallyImplyLeading: false,
+          leading: Builder(
+            builder: (context) => IconButton(
+              icon: new Icon(Icons.list_sharp),
+              onPressed: () => Scaffold.of(context).openDrawer(),
             ),
           ),
           actions: <Widget>[
