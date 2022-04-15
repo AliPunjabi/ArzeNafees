@@ -31,21 +31,36 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  @override
+  late StreamSubscription<User?> user;
+
   void initState() {
     super.initState();
+    user = FirebaseAuth.instance.authStateChanges().listen((user) {
+      if (user == null) {
+        print('User is currently signed out!');
+      } else {
+        print('User is signed in!');
+      }
+    });
     Timer(
         Duration(seconds: 3),
         () => Navigator.pushReplacement(
               context,
               Transitions(
-                transitionType: TransitionType.fade,
-                curve: Curves.easeInOut,
-                duration: const Duration(milliseconds: 1000),
-                reverseCurve: Curves.easeInOut,
-                widget: LoginScreen(),
-              ),
+                  transitionType: TransitionType.fade,
+                  curve: Curves.easeInOut,
+                  duration: const Duration(milliseconds: 1000),
+                  reverseCurve: Curves.easeInOut,
+                  widget: FirebaseAuth.instance.currentUser == null
+                      ? LoginScreen()
+                      : HomeScreen()),
             ));
+  }
+
+  @override
+  void dispose() {
+    user.cancel();
+    super.dispose();
   }
 
   @override
