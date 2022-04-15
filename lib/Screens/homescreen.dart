@@ -40,9 +40,22 @@ class _HomeScreenState extends State<HomeScreen> {
                 leading: Icon(Icons.feedback_sharp, color: Constants.colorMain),
                 title: Text('Feedback'),
               ),
-              ListTile(
-                leading: Icon(Icons.logout, color: Constants.colorMain),
-                title: Text('Logout'),
+              GestureDetector(
+                onTap: () async {
+                  await FirebaseAuth.instance.signOut();
+                  Navigator.of(context).pushReplacement(
+                    Transitions(
+                        transitionType: TransitionType.fade,
+                        curve: Curves.bounceInOut,
+                        duration: const Duration(milliseconds: 500),
+                        reverseCurve: Curves.bounceOut,
+                        widget: LoginScreen()),
+                  );
+                },
+                child: ListTile(
+                  leading: Icon(Icons.logout, color: Constants.colorMain),
+                  title: Text('Logout'),
+                ),
               ),
               SizedBox(
                 height: 40,
