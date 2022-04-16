@@ -154,22 +154,41 @@ class _LoginScreenState extends State<LoginScreen> {
                                         );
                                       }
                                     } on FirebaseAuthException catch (e) {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(SnackBar(
-                                        content: Text(e.message.toString()),
-                                        behavior: SnackBarBehavior.floating,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(14),
-                                        ),
-                                        margin: EdgeInsets.only(
-                                            bottom: MediaQuery.of(context)
-                                                    .size
-                                                    .height -
-                                                100,
-                                            right: 20,
-                                            left: 20),
-                                      ));
+                                      if (Platform.isAndroid) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(SnackBar(
+                                          content: Text(e.message.toString()),
+                                          behavior: SnackBarBehavior.floating,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(14),
+                                          ),
+                                          margin: EdgeInsets.only(
+                                              bottom: MediaQuery.of(context)
+                                                      .size
+                                                      .height -
+                                                  100,
+                                              right: 20,
+                                              left: 20),
+                                        ));
+                                      } else if (Platform.isIOS) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(SnackBar(
+                                          content: Text(e.message.toString()),
+                                          behavior: SnackBarBehavior.floating,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(14),
+                                          ),
+                                          margin: EdgeInsets.only(
+                                              bottom: MediaQuery.of(context)
+                                                      .size
+                                                      .height -
+                                                  100,
+                                              right: 20,
+                                              left: 20),
+                                        ));
+                                      }
                                       setState(() {
                                         isLoading = false;
                                       });
