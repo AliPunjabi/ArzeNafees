@@ -172,22 +172,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                               left: 20),
                                         ));
                                       } else if (Platform.isIOS) {
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(SnackBar(
-                                          content: Text(e.message.toString()),
-                                          behavior: SnackBarBehavior.floating,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(14),
-                                          ),
-                                          margin: EdgeInsets.only(
-                                              bottom: MediaQuery.of(context)
-                                                      .size
-                                                      .height -
-                                                  100,
-                                              right: 20,
-                                              left: 20),
-                                        ));
+                                        Fluttertoast.showToast(
+                                          msg: e.message.toString(),
+                                          toastLength: Toast.LENGTH_LONG,
+                                          gravity: ToastGravity.TOP,
+                                          fontSize: 18,
+                                          backgroundColor: Colors.grey,
+                                        );
                                       }
                                       setState(() {
                                         isLoading = false;
