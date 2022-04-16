@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, prefer_const_literals_to_create_immutables, unnecessary_new
 import 'package:arzenafees/Components/Export/custom_import.dart';
+import 'package:arzenafees/Screens/contactusscreen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -32,10 +33,20 @@ class _HomeScreenState extends State<HomeScreen> {
                     color: Constants.colorMain),
                 title: Text('Listening'),
               ),
-              ListTile(
-                leading: Icon(Icons.phone_callback, color: Constants.colorMain),
-                title: Text('Contact Us'),
-              ),
+              GestureDetector(
+                  onTap: (() => Navigator.of(context).push(
+                        Transitions(
+                            transitionType: TransitionType.fade,
+                            curve: Curves.bounceInOut,
+                            duration: const Duration(milliseconds: 500),
+                            reverseCurve: Curves.bounceOut,
+                            widget: ContactScreen()),
+                      )),
+                  child: ListTile(
+                    leading:
+                        Icon(Icons.phone_callback, color: Constants.colorMain),
+                    title: Text('Contact Us'),
+                  )),
               ListTile(
                 leading: Icon(Icons.feedback_sharp, color: Constants.colorMain),
                 title: Text('Feedback'),
