@@ -1,6 +1,7 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, unrelated_type_equality_checks
 
 import 'package:arzenafees/Components/Export/custom_import.dart';
+import 'package:arzenafees/Screens/nointernetscreen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -53,7 +54,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   reverseCurve: Curves.easeInOut,
                   widget: FirebaseAuth.instance.currentUser == null
                       ? LoginScreen()
-                      : HomeScreen()),
+                      : Constants.checkNetwork() == true
+                          ? NoConnectionScreen()
+                          : LoginScreen()),
             ));
   }
 
