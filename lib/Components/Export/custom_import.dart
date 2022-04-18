@@ -17,3 +17,4 @@ export 'package:connectivity/connectivity.dart';
 export 'package:fluttertoast/fluttertoast.dart';
 export 'package:shared_preferences/shared_preferences.dart';
 export 'dart:io' show Platform;
+export 'package:arzenafees/Screens/contactusscreen.dart';
