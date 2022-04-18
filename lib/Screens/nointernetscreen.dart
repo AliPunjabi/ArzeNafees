@@ -15,7 +15,18 @@ class NoConnectionScreen extends StatelessWidget {
             bottom: 100,
             left: 30,
             child: CustomElevatedButton(
-              onPressed: () {},
+              onPressed: () async {
+                await Constants.checkNetwork() == true
+                    ? Navigator.of(context).push(
+                        Transitions(
+                            transitionType: TransitionType.fade,
+                            curve: Curves.bounceInOut,
+                            duration: const Duration(milliseconds: 500),
+                            reverseCurve: Curves.bounceOut,
+                            widget: HomeScreen()),
+                      )
+                    : Constants.checkNetwork();
+              },
               child: Text("Retry".toUpperCase()),
             ),
           )

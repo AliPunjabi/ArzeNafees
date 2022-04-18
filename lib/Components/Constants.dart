@@ -48,12 +48,12 @@ class Constants {
   static Future<bool> checkNetwork() async {
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.mobile) {
-      return true;
+      return Future<bool>.value(true);
     } else if (connectivityResult == ConnectivityResult.wifi) {
-      return true;
+      return Future<bool>.value(true);
     } else {
       Constants.toastMessage("No Internet Connection");
-      return false;
+      return Future<bool>.value(false);
     }
   }
 

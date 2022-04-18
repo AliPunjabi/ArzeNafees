@@ -45,19 +45,18 @@ class _MyHomePageState extends State<MyHomePage> {
     });
     Timer(
         Duration(seconds: 3),
-        () => Navigator.pushReplacement(
-              context,
-              Transitions(
-                  transitionType: TransitionType.fade,
-                  curve: Curves.easeInOut,
-                  duration: const Duration(milliseconds: 1000),
-                  reverseCurve: Curves.easeInOut,
-                  widget: FirebaseAuth.instance.currentUser == null
-                      ? LoginScreen()
-                      : Constants.checkNetwork() == true
-                          ? NoConnectionScreen()
-                          : LoginScreen()),
-            ));
+        () async => Navigator.pushReplacement(
+            context,
+            Transitions(
+                transitionType: TransitionType.fade,
+                curve: Curves.easeInOut,
+                duration: const Duration(milliseconds: 1000),
+                reverseCurve: Curves.easeInOut,
+                widget: FirebaseAuth.instance.currentUser == null
+                    ? LoginScreen()
+                    : await Constants.checkNetwork() == true
+                        ? HomeScreen()
+                        : NoConnectionScreen())));
   }
 
   @override
