@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, prefer_const_literals_to_create_immutables, unnecessary_new
 import 'package:arzenafees/Components/Export/custom_import.dart';
+import 'package:arzenafees/Screens/nointernetscreen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -8,6 +9,9 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   String dropdownValue = 'Islamabad';
+
+  final List<Widget> _children = [buyScreen(), NoConnectionScreen()];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -163,37 +167,56 @@ class _HomeScreenState extends State<HomeScreen> {
           "More then 10,000 ads \n for sale and rental of\n         real estate  ",
           style: TextStyle(color: Colors.grey),
         ),
-        Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Card(
-            elevation: 2,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15.0)),
-            child: ToggleSwitch(
-              fontSize: 18,
-              minWidth: 150.0,
-              minHeight: 60,
-              cornerRadius: 12.0,
-              activeBgColors: [
-                [Constants.colorMain],
-                [Constants.colorMain]
-              ],
-              inactiveBgColor: Constants.colorSecond,
-              activeFgColor: Constants.colorSecond,
-              inactiveFgColor: Colors.black54,
-              initialLabelIndex: 0,
-              totalSwitches: 2,
-              labels: ['Buy', 'Rent'],
-              customTextStyles: [
-                TextStyle(fontWeight: FontWeight.bold),
-                TextStyle(fontWeight: FontWeight.bold)
-              ],
-              radiusStyle: true,
-              onToggle: (index) {
-                print('switched to: $index');
-              },
-            ),
-          ),
+        SizedBox(
+          height: 20,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            SizedBox(
+                height: 50,
+                width: 150,
+                child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        Transitions(
+                            transitionType: TransitionType.fade,
+                            curve: Curves.bounceInOut,
+                            duration: const Duration(milliseconds: 500),
+                            reverseCurve: Curves.bounceOut,
+                            widget: buyScreen()),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      shape: new RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(10.0),
+                      ),
+                    ),
+                    child: Text(
+                      'Buy',
+                      style: TextStyle(
+                          fontFamily: 'Roboto',
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20),
+                    ))),
+            SizedBox(
+                height: 50,
+                width: 150,
+                child: ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      shape: new RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(10.0),
+                      ),
+                    ),
+                    child: Text(
+                      'Rent',
+                      style: TextStyle(
+                          fontFamily: 'Roboto',
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20),
+                    ))),
+          ],
         ),
         SizedBox(
           height: 25,

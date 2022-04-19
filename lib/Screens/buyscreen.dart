@@ -21,25 +21,35 @@ class _buyScreenState extends State<buyScreen> {
     return Scaffold(
       backgroundColor: Constants.coloroffWhite,
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Constants.colorMain),
-        elevation: 0,
-        backgroundColor: Constants.coloroffWhite,
-        title: Text(
-          "ARZ E NAFEES",
-          style: TextStyle(
-              fontFamily: 'Roboto',
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
-              color: Constants.colorMain),
-        ),
-        centerTitle: false,
-        leadingWidth: 30,
-        titleSpacing: 0,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 8.0),
-          child: Icon(Icons.arrow_back_ios),
-        ),
-      ),
+          iconTheme: IconThemeData(color: Constants.colorMain),
+          elevation: 0,
+          backgroundColor: Constants.coloroffWhite,
+          title: Text(
+            "ARZ E NAFEES",
+            style: TextStyle(
+                fontFamily: 'Roboto',
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+                color: Constants.colorMain),
+          ),
+          centerTitle: false,
+          leadingWidth: 30,
+          titleSpacing: 0,
+          leading: Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: GestureDetector(
+                child: Icon(Icons.arrow_back_ios),
+                onTap: () {
+                  Navigator.of(context).push(
+                    Transitions(
+                        transitionType: TransitionType.fade,
+                        curve: Curves.bounceInOut,
+                        duration: const Duration(milliseconds: 500),
+                        reverseCurve: Curves.bounceOut,
+                        widget: HomeScreen()),
+                  );
+                }),
+          )),
       body: Column(children: [
         SizedBox(
           height: 20,
