@@ -226,34 +226,45 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Container(
-                height: 120,
-                width: 100,
-                child: Card(
-                  elevation: 10,
-                  color: Constants.colorSecond,
-                  shape: RoundedRectangleBorder(
-                    side: BorderSide(color: Colors.white70, width: 1),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Column(
-                    children: <Widget>[
-                      Icon(
-                        Icons.home,
-                        color: Constants.colorMain,
-                        size: 80,
+              GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      Transitions(
+                          transitionType: TransitionType.fade,
+                          curve: Curves.bounceInOut,
+                          duration: const Duration(milliseconds: 500),
+                          reverseCurve: Curves.bounceOut,
+                          widget: addPropertyScreen()),
+                    );
+                  },
+                  child: Container(
+                    height: 120,
+                    width: 100,
+                    child: Card(
+                      elevation: 10,
+                      color: Constants.colorSecond,
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(color: Colors.white70, width: 1),
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                      Text(
-                        'Add Property',
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontFamily: 'Roboto',
-                            fontWeight: FontWeight.bold),
-                      )
-                    ],
-                  ),
-                ),
-              ),
+                      child: Column(
+                        children: <Widget>[
+                          Icon(
+                            Icons.home,
+                            color: Constants.colorMain,
+                            size: 80,
+                          ),
+                          Text(
+                            'Add Property',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: 'Roboto',
+                                fontWeight: FontWeight.bold),
+                          )
+                        ],
+                      ),
+                    ),
+                  )),
               Container(
                 height: 120,
                 width: 100,

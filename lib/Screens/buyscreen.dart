@@ -25,7 +25,7 @@ class _buyScreenState extends State<buyScreen> {
           elevation: 0,
           backgroundColor: Constants.coloroffWhite,
           title: Text(
-            "ARZ E NAFEES",
+            "Filters",
             style: TextStyle(
                 fontFamily: 'Roboto',
                 fontWeight: FontWeight.bold,
