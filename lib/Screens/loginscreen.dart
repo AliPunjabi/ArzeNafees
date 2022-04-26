@@ -228,14 +228,14 @@ class _LoginScreenState extends State<LoginScreen> {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text(
-                            'Do not have account? ',
+                            'Don\'t have account? ',
                             style: TextStyle(
                               fontFamily: Constants.appFont,
                               fontSize: 14,
                             ),
                           ),
                           Text(
-                            'Create Now',
+                            'Sign Up',
                             style: TextStyle(
                                 fontFamily: Constants.appFont,
                                 fontSize: 16,

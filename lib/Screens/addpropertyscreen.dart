@@ -14,6 +14,7 @@ class _addPropertyScreenState extends State<addPropertyScreen> {
   bool _editMode = false;
 
   String? dropdownValue;
+  String? dropdownValue2;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -204,6 +205,68 @@ class _addPropertyScreenState extends State<addPropertyScreen> {
             ),
             SizedBox(
               height: 10,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: FormField<String>(builder: (FormFieldState<String> state) {
+                return InputDecorator(
+                    decoration: InputDecoration(
+                        contentPadding: EdgeInsets.fromLTRB(12, 10, 20, 20),
+                        // labelText: "hi",
+                        // labelStyle: textStyle,
+                        // labelText: _dropdownValue == null
+                        //     ? 'Where are you from'
+                        //     : 'From',
+
+                        errorStyle:
+                            TextStyle(color: Colors.redAccent, fontSize: 16.0),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0))),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey,
+                          fontFamily: "verdana_regular",
+                        ),
+                        hint: Text(
+                          "Select Subtype",
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 16,
+                            fontFamily: "verdana_regular",
+                          ),
+                        ),
+                        value: dropdownValue2 == null ? null : dropdownValue2,
+                        isExpanded: true,
+                        isDense: true,
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            dropdownValue2 = newValue;
+                          });
+                        },
+                        items: <String>[
+                          'House',
+                          'Apartment',
+                          'Guest House',
+                          'Upper Portion',
+                          'Lower Portion',
+                          'Farm House',
+                          'Room',
+                          'Penthouse',
+                          'Hotel Suites',
+                          'Basement',
+                          'Annexe',
+                          'Hostel'
+                        ].map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                      ),
+                    ));
+              }),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
