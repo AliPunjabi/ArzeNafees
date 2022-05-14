@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, prefer_const_literals_to_create_immutables, unnecessary_new, prefer_if_null_operators
 import 'package:arzenafees/Components/Export/custom_import.dart';
+import 'package:flutter/services.dart';
 
 enum SingingCharacter { Residential, Plot, Commercial }
 
@@ -11,6 +12,7 @@ class addPropertyScreen extends StatefulWidget {
 TextEditingController _textarea = TextEditingController();
 TextEditingController _textaddress = TextEditingController();
 TextEditingController _textprice = TextEditingController();
+String? strCountryCode = '+92';
 
 class _addPropertyScreenState extends State<addPropertyScreen> {
   final TextEditingController _controller = TextEditingController();
@@ -877,6 +879,61 @@ class _addPropertyScreenState extends State<addPropertyScreen> {
                       ],
                     )),
               ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  height: 50,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(8.0),
+                    border: Border.all(width: 0.5, color: Colors.grey),
+                  ),
+                  child: Row(
+                    children: [
+                      const SizedBox(width: 15),
+                      Text(strCountryCode!),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: TextFormField(
+                          textInputAction: TextInputAction.next,
+                          maxLength: 10,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly
+                          ],
+                          buildCounter: (context,
+                                  {required currentLength,
+                                  required isFocused,
+                                  maxLength}) =>
+                              null,
+                          keyboardType: TextInputType.number,
+                          onFieldSubmitted: (v) {
+                            FocusScope.of(context).nextFocus();
+                          },
+                          decoration: const InputDecoration.collapsed(
+                              hintText: '3123456789'),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              SizedBox(
+                  height: 50,
+                  width: 250,
+                  child: ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        shape: new RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(10.0),
+                        ),
+                      ),
+                      child: Text(
+                        'Submit',
+                        style: TextStyle(fontFamily: 'Roboto', fontSize: 20),
+                      ))),
             ],
           ),
 
