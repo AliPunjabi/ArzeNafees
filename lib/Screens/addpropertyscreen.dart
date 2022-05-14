@@ -683,7 +683,7 @@ class _addPropertyScreenState extends State<addPropertyScreen> {
                 padding: const EdgeInsets.all(8.0),
                 child: Center(
                   child: Container(
-                    height: 170,
+                    //height: 170,
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
                       color: Colors.white,
@@ -691,6 +691,7 @@ class _addPropertyScreenState extends State<addPropertyScreen> {
                       border: Border.all(color: Colors.grey.withOpacity(0.2)),
                     ),
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         TextFormField(
                           keyboardType: TextInputType.text,
@@ -799,11 +800,82 @@ class _addPropertyScreenState extends State<addPropertyScreen> {
                               ],
                             ),
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),
                 ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                    width: 370,
+                    padding: const EdgeInsets.all(15),
+                    //constraints: const BoxConstraints(minHeight: 70),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10.0),
+                      border: Border.all(color: Colors.grey.withOpacity(0.2)),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                            height: 50,
+                            width: 250,
+                            child: ElevatedButton(
+                                onPressed: () {},
+                                style: ElevatedButton.styleFrom(
+                                  shape: new RoundedRectangleBorder(
+                                    borderRadius:
+                                        new BorderRadius.circular(10.0),
+                                  ),
+                                ),
+                                child: Text(
+                                  'Select from gallery',
+                                  style: TextStyle(
+                                      fontFamily: 'Roboto', fontSize: 20),
+                                ))),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          'OR',
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        SizedBox(
+                            height: 50,
+                            width: 250,
+                            child: ElevatedButton(
+                                onPressed: () {},
+                                style: ElevatedButton.styleFrom(
+                                  shape: new RoundedRectangleBorder(
+                                    borderRadius:
+                                        new BorderRadius.circular(10.0),
+                                  ),
+                                ),
+                                child: Text(
+                                  'Take Photo',
+                                  style: TextStyle(
+                                      fontFamily: 'Roboto', fontSize: 20),
+                                ))),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          '*Max size should be 5mb',
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
+                        ),
+                      ],
+                    )),
               ),
             ],
           ),
