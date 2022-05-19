@@ -66,7 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     const SizedBox(height: 10),
                     const Text(
-                      'Welcome back you\'ve been missed!',
+                      'Welcome back, you\'ve been missed!',
                       style: TextStyle(
                         color: Color(0xFF03041D),
                         fontSize: 16.0,
