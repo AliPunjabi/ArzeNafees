@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, prefer_const_literals_to_create_immutables, unnecessary_new, prefer_if_null_operators
 import 'package:arzenafees/Components/Export/custom_import.dart';
+import 'package:arzenafees/model/addproperty.dart';
+import 'package:arzenafees/services/addpropertyapi.dart';
 import 'package:flutter/services.dart';
 
 enum SingingCharacter { Residential, Plot, Commercial }
@@ -16,9 +18,22 @@ String? strCountryCode = '+92';
 
 class _addPropertyScreenState extends State<addPropertyScreen> {
   final TextEditingController _controller = TextEditingController();
+  final TextEditingController _controller1 = TextEditingController();
+  final TextEditingController _controller2 = TextEditingController();
+  final TextEditingController _controller3 = TextEditingController();
+  final TextEditingController _controller4 = TextEditingController();
+  final TextEditingController _controller5 = TextEditingController();
+  final TextEditingController _controller6 = TextEditingController();
+  final TextEditingController _controller7 = TextEditingController();
+  final TextEditingController _controller8 = TextEditingController();
+  final TextEditingController _controller9 = TextEditingController();
+  final TextEditingController _controller10 = TextEditingController();
+  Future<Addproperty>? _futureproperty;
   SingingCharacter? _character = SingingCharacter.Residential;
   bool _editMode = false;
   bool isChecked = false;
+  String category = 'buy';
+  String radio = 'Residential';
 
   String? dropdownValue;
   String? dropdownValue2;
@@ -144,6 +159,15 @@ class _addPropertyScreenState extends State<addPropertyScreen> {
                 radiusStyle: true,
                 onToggle: (index) {
                   print('switched to: $index');
+                  if (index == 0) {
+                    setState(() {
+                      category = "buy";
+                    });
+                  } else {
+                    setState(() {
+                      category = "rent";
+                    });
+                  }
                 },
               ),
             ),
@@ -204,6 +228,7 @@ class _addPropertyScreenState extends State<addPropertyScreen> {
                 onChanged: (SingingCharacter? value) {
                   setState(() {
                     _character = value;
+                    radio = 'Residential';
                   });
                 },
               ),
@@ -215,6 +240,7 @@ class _addPropertyScreenState extends State<addPropertyScreen> {
                 onChanged: (SingingCharacter? value) {
                   setState(() {
                     _character = value;
+                    radio = 'Plot';
                   });
                 },
               ),
@@ -226,6 +252,7 @@ class _addPropertyScreenState extends State<addPropertyScreen> {
                 onChanged: (SingingCharacter? value) {
                   setState(() {
                     _character = value;
+                    radio = 'Commercial';
                   });
                 },
               ),
@@ -696,6 +723,7 @@ class _addPropertyScreenState extends State<addPropertyScreen> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         TextFormField(
+                          controller: _controller1,
                           keyboardType: TextInputType.text,
                           textAlign: align
                               ? TextAlign.justify
@@ -895,6 +923,7 @@ class _addPropertyScreenState extends State<addPropertyScreen> {
                       const SizedBox(width: 10),
                       Expanded(
                         child: TextFormField(
+                          controller: _controller2,
                           textInputAction: TextInputAction.next,
                           maxLength: 10,
                           inputFormatters: [
@@ -924,7 +953,23 @@ class _addPropertyScreenState extends State<addPropertyScreen> {
                   height: 50,
                   width: 250,
                   child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          _futureproperty = addproperty(
+                            category,
+                            _controller.text,
+                            radio,
+                            dropdownValue2,
+                            dropdownValue,
+                            dropdownValue3,
+                            _textaddress.text,
+                            dropdownValue5,
+                            _textprice.text,
+                            _controller1.text,
+                            _controller2.text,
+                          );
+                        });
+                      },
                       style: ElevatedButton.styleFrom(
                         shape: new RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(10.0),
