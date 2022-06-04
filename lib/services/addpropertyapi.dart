@@ -3,7 +3,7 @@ import 'package:arzenafees/model/addproperty.dart';
 import 'package:http/http.dart' as http;
 
 Future<Addproperty> addproperty(String category, title, type, subtype, city,
-    area, size, unit, price, description, contact) async {
+    area, size, unit, price, description, image, contact) async {
   final response = await http.post(
     Uri.parse('https://arz-e-nafees.nafeessolutions.com/public/api/store'),
     headers: <String, String>{
@@ -21,6 +21,7 @@ Future<Addproperty> addproperty(String category, title, type, subtype, city,
       'unit': unit,
       'property_price': price,
       'property_description': description,
+      'property_image': image,
       'contact_number': contact,
     }),
   );

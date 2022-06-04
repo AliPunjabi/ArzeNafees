@@ -1,8 +1,12 @@
 // ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, prefer_const_literals_to_create_immutables, unnecessary_new, prefer_if_null_operators
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:arzenafees/Components/Export/custom_import.dart';
 import 'package:arzenafees/model/addproperty.dart';
 import 'package:arzenafees/services/addpropertyapi.dart';
 import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 
 enum SingingCharacter { Residential, Plot, Commercial }
 
@@ -34,6 +38,9 @@ class _addPropertyScreenState extends State<addPropertyScreen> {
   bool isChecked = false;
   String category = 'buy';
   String radio = 'Residential';
+  File? image;
+  File? uploadimage;
+  String? baseimage;
 
   String? dropdownValue;
   String? dropdownValue2;
@@ -855,18 +862,22 @@ class _addPropertyScreenState extends State<addPropertyScreen> {
                             height: 50,
                             width: 250,
                             child: ElevatedButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  pickImage();
+                                },
                                 style: ElevatedButton.styleFrom(
                                   shape: new RoundedRectangleBorder(
                                     borderRadius:
                                         new BorderRadius.circular(10.0),
                                   ),
                                 ),
-                                child: Text(
-                                  'Select from gallery',
-                                  style: TextStyle(
-                                      fontFamily: 'Roboto', fontSize: 20),
-                                ))),
+                                child: image != null
+                                    ? Image.file(image!)
+                                    : Text(
+                                        'Select from gallery',
+                                        style: TextStyle(
+                                            fontFamily: 'Roboto', fontSize: 20),
+                                      ))),
                         SizedBox(
                           height: 10,
                         ),
@@ -966,6 +977,7 @@ class _addPropertyScreenState extends State<addPropertyScreen> {
                             dropdownValue5,
                             _textprice.text,
                             _controller1.text,
+                            baseimage,
                             _controller2.text,
                           );
                         });
@@ -986,5 +998,21 @@ class _addPropertyScreenState extends State<addPropertyScreen> {
         ]),
       ),
     );
+  }
+
+  Future pickImage() async {
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      setState(() {
+        uploadimage = image as File?;
+      });
+      if (image == null) return;
+      final imageTemp = File(image.path);
+      setState(() => this.image = imageTemp);
+      List<int> imageBytes = uploadimage!.readAsBytesSync();
+      baseimage = base64Encode(imageBytes);
+    } on PlatformException catch (e) {
+      print('Failed to pick image: $e');
+    }
   }
 }

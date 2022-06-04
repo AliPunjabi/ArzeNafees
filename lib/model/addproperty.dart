@@ -11,6 +11,7 @@ class Addproperty {
   final String size;
   final String unit;
   final String category;
+  final String image;
 
   const Addproperty(
       {required this.id,
@@ -24,6 +25,7 @@ class Addproperty {
       required this.size,
       required this.unit,
       required this.category,
+      required this.image,
       required this.type});
 
   factory Addproperty.fromJson(Map<String, dynamic> json) {
@@ -39,6 +41,7 @@ class Addproperty {
         size: json['size'],
         unit: json['unit'],
         category: json['property_category'],
+        image: json['property_image'],
         type: json['property_type']);
   }
 }
