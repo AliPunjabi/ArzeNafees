@@ -1004,7 +1004,7 @@ class _addPropertyScreenState extends State<addPropertyScreen> {
     try {
       final image = await ImagePicker().pickImage(source: ImageSource.gallery);
       setState(() {
-        uploadimage = image as File?;
+        uploadimage = File(image!.path);
       });
       if (image == null) return;
       final imageTemp = File(image.path);

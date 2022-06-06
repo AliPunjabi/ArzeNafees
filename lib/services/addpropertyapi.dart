@@ -26,7 +26,7 @@ Future<Addproperty> addproperty(String category, title, type, subtype, city,
     }),
   );
 
-  if (response.statusCode == 200) {
+  if (response.statusCode == 200 || response.statusCode == 302) {
     // If the server did return a 201 CREATED response,
     // then parse the JSON.
     return Addproperty.fromJson(jsonDecode(response.body));
