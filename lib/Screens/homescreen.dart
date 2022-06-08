@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, prefer_const_literals_to_create_immutables, unnecessary_new
 import 'package:arzenafees/Components/Export/custom_import.dart';
+import 'package:arzenafees/Components/vertical_cards.dart';
 import 'package:arzenafees/Screens/nointernetscreen.dart';
+import 'package:arzenafees/services/areaguideapi.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -386,7 +388,17 @@ class _HomeScreenState extends State<HomeScreen> {
           height: 150.0,
           child: Padding(
             padding: const EdgeInsets.all(12.0),
-            child: ListView(
+            child: FutureBuilder(
+              future: fetcharea(),
+              builder: (context, AsyncSnapshot snapshot) {
+                if (!snapshot.hasData) {
+                  return Center(child: CircularProgressIndicator());
+                } else {
+                  return vertical_cards(snapshot.data);
+                }
+              },
+            ),
+            /*ListView(
               // This next line does the trick.
               scrollDirection: Axis.horizontal,
               children: <Widget>[
@@ -456,7 +468,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ],
-            ),
+            ),*/
           ),
         ),
         SizedBox(
