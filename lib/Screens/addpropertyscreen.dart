@@ -4,7 +4,9 @@ import 'dart:io';
 
 import 'package:arzenafees/Components/Export/custom_import.dart';
 import 'package:arzenafees/model/addproperty.dart';
+import 'package:arzenafees/model/areasubtype.dart';
 import 'package:arzenafees/services/addpropertyapi.dart';
+import 'package:arzenafees/services/areasubtypeapi.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -19,6 +21,7 @@ TextEditingController _textarea = TextEditingController();
 TextEditingController _textaddress = TextEditingController();
 TextEditingController _textprice = TextEditingController();
 String? strCountryCode = '+92';
+var groupValue;
 
 class _addPropertyScreenState extends State<addPropertyScreen> {
   final TextEditingController _controller = TextEditingController();
@@ -37,7 +40,7 @@ class _addPropertyScreenState extends State<addPropertyScreen> {
   bool _editMode = false;
   bool isChecked = false;
   String category = 'buy';
-  String radio = 'Residential';
+  String? radio = "Residential";
   File? image;
   File? uploadimage;
   String? baseimage;
@@ -62,6 +65,16 @@ class _addPropertyScreenState extends State<addPropertyScreen> {
   bool rightAlign = false;
 
   bool color = false;
+  @override
+  initState() {
+    super.initState();
+    initialSubtype().whenComplete(() => print("complete"));
+  }
+
+  initialSubtype() async {
+    await fetchareasubtype(radio);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -232,35 +245,35 @@ class _addPropertyScreenState extends State<addPropertyScreen> {
                 value: SingingCharacter.Residential,
                 activeColor: Constants.colorMain,
                 groupValue: _character,
-                onChanged: (SingingCharacter? value) {
-                  setState(() {
-                    _character = value;
-                    radio = 'Residential';
-                  });
+                onChanged: (SingingCharacter? value) async {
+                  _character = value;
+                  radio = 'Residential';
+                  await fetchareasubtype(radio);
+                  setState(() {});
                 },
               ),
               RadioListTile<SingingCharacter>(
                 title: const Text('Plot'),
-                activeColor: Constants.colorMain,
                 value: SingingCharacter.Plot,
+                activeColor: Constants.colorMain,
                 groupValue: _character,
-                onChanged: (SingingCharacter? value) {
-                  setState(() {
-                    _character = value;
-                    radio = 'Plot';
-                  });
+                onChanged: (SingingCharacter? value) async {
+                  _character = value;
+                  radio = 'Plots';
+                  await fetchareasubtype(radio);
+                  setState(() {});
                 },
               ),
               RadioListTile<SingingCharacter>(
                 title: const Text('Commercial'),
-                activeColor: Constants.colorMain,
                 value: SingingCharacter.Commercial,
+                activeColor: Constants.colorMain,
                 groupValue: _character,
-                onChanged: (SingingCharacter? value) {
-                  setState(() {
-                    _character = value;
-                    radio = 'Commercial';
-                  });
+                onChanged: (SingingCharacter? value) async {
+                  _character = value;
+                  radio = 'Commercial';
+                  await fetchareasubtype(radio);
+                  setState(() {});
                 },
               ),
               SizedBox(
@@ -306,23 +319,11 @@ class _addPropertyScreenState extends State<addPropertyScreen> {
                               dropdownValue2 = newValue;
                             });
                           },
-                          items: <String>[
-                            'House',
-                            'Apartment',
-                            'Guest House',
-                            'Upper Portion',
-                            'Lower Portion',
-                            'Farm House',
-                            'Room',
-                            'Penthouse',
-                            'Hotel Suites',
-                            'Basement',
-                            'Annexe',
-                            'Hostel'
-                          ].map<DropdownMenuItem<String>>((String value) {
+                          items:
+                              subtypes?.map<DropdownMenuItem<String>>((value) {
                             return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
+                              value: value.name,
+                              child: Text(value.name),
                             );
                           }).toList(),
                         ),

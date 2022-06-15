@@ -16,6 +16,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    //getArea();
     return Scaffold(
       backgroundColor: Constants.coloroffWhite,
       drawer: Padding(
@@ -394,7 +395,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 if (!snapshot.hasData) {
                   return Center(child: CircularProgressIndicator());
                 } else {
-                  return vertical_cards(snapshot.data);
+                  return VerticalCards(snapshot.data);
                 }
               },
             ),

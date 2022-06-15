@@ -1,22 +1,23 @@
 // ignore_for_file: prefer_const_constructors, must_be_immutable, use_key_in_widget_constructors, sized_box_for_whitespace
 
 import 'package:arzenafees/Components/Constants.dart';
+import 'package:arzenafees/model/areaguide.dart';
 import 'package:arzenafees/services/areaguideapi.dart';
 import 'package:flutter/material.dart';
 
-class vertical_cards extends StatelessWidget {
-  List? areaData;
-  vertical_cards(this.areaData);
+class VerticalCards extends StatelessWidget {
+  List<Areaguide> areaData;
+  VerticalCards(this.areaData);
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(color: Constants.colorSecond),
       height: MediaQuery.of(context).size.height,
       child: ListView.builder(
-        scrollDirection: Axis.vertical,
-        itemCount: areaData!.length,
+        scrollDirection: Axis.horizontal,
+        itemCount: areaData.length,
         itemBuilder: (context, index) {
-          final String name = areaData![index]['location_city'];
+          final String? image = areaData[index].propertyImage;
 
           return Container(
               // width: MediaQuery.of(context).size.width * 0.6,
@@ -36,22 +37,11 @@ class vertical_cards extends StatelessWidget {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(15.0)),
                           image: DecorationImage(
-                            image: NetworkImage(
-                                'https://www.insticc.org/node/TechnicalProgram/SENSORNETS/2020/posters/P15131'),
+                            image: NetworkImage(image!),
                             fit: BoxFit.fill,
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(16, 8, 0, 16),
-                        child: Text(
-                          '$name',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
-                              color: Constants.colorMain),
-                        ),
-                      )
                     ]),
                   )),
             ),
