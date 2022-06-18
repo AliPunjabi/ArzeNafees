@@ -1,43 +1,86 @@
+// To parse this JSON data, do
+//
+//     final areaguide = areaguideFromJson(jsonString);
+
 import 'dart:convert';
 
-List<Areaguide> areaguideFromJson(String str) =>
-    List<Areaguide>.from(json.decode(str).map((x) => Areaguide.fromJson(x)));
+Areaguide areaguideFromJson(String str) => Areaguide.fromJson(json.decode(str));
 
-String areaguideToJson(List<Areaguide> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String areaguideToJson(Areaguide data) => json.encode(data.toJson());
 
 class Areaguide {
   Areaguide({
-    required this.propertyImage,
-    required this.propertyTitle,
-    required this.locationCity,
-    required this.locationArea,
-    required this.propertyDescription,
-    required this.propertyPrice,
+    required this.propertySale,
+    required this.propertyRent,
+    required this.areaGuide,
+    required this.areaGuideImg64,
+    required this.areaGuideVideoUrl,
   });
 
-  String propertyImage;
-  String propertyTitle;
-  String locationCity;
-  String locationArea;
-  String propertyDescription;
-  String propertyPrice;
+  int propertySale;
+  int propertyRent;
+  List<AreaGuide> areaGuide;
+  List<String> areaGuideImg64;
+  String areaGuideVideoUrl;
 
   factory Areaguide.fromJson(Map<String, dynamic> json) => Areaguide(
-        propertyImage: json["property_image"],
-        propertyTitle: json["property_title"],
-        locationCity: json["location_city"],
-        locationArea: json["location_area"],
-        propertyDescription: json["property_description"],
-        propertyPrice: json["property_price"],
+        propertySale: json["property_sale"],
+        propertyRent: json["property_rent"],
+        areaGuide: List<AreaGuide>.from(
+            json["areaGuide"].map((x) => AreaGuide.fromJson(x))),
+        areaGuideImg64: List<String>.from(json["areaGuideImg64"].map((x) => x)),
+        areaGuideVideoUrl: json["areaGuideVideoUrl"],
       );
 
   Map<String, dynamic> toJson() => {
-        "property_image": propertyImage,
-        "property_title": propertyTitle,
-        "location_city": locationCity,
-        "location_area": locationArea,
-        "property_description": propertyDescription,
-        "property_price": propertyPrice,
+        "property_sale": propertySale,
+        "property_rent": propertyRent,
+        "areaGuide": List<dynamic>.from(areaGuide.map((x) => x.toJson())),
+        "areaGuideImg64": List<dynamic>.from(areaGuideImg64.map((x) => x)),
+        "areaGuideVideoUrl": areaGuideVideoUrl,
+      };
+}
+
+class AreaGuide {
+  AreaGuide({
+    required this.id,
+    required this.sector,
+    required this.city,
+    required this.description,
+    required this.images,
+    required this.video,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+
+  int id;
+  String sector;
+  String city;
+  String description;
+  String images;
+  String video;
+  DateTime createdAt;
+  DateTime updatedAt;
+
+  factory AreaGuide.fromJson(Map<String, dynamic> json) => AreaGuide(
+        id: json["id"],
+        sector: json["sector"],
+        city: json["city"],
+        description: json["description"],
+        images: json["images"],
+        video: json["video"],
+        createdAt: DateTime.parse(json["created_at"]),
+        updatedAt: DateTime.parse(json["updated_at"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "sector": sector,
+        "city": city,
+        "description": description,
+        "images": images,
+        "video": video,
+        "created_at": createdAt.toIso8601String(),
+        "updated_at": updatedAt.toIso8601String(),
       };
 }

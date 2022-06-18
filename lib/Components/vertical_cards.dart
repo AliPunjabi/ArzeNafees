@@ -1,12 +1,12 @@
 // ignore_for_file: prefer_const_constructors, must_be_immutable, use_key_in_widget_constructors, sized_box_for_whitespace
 
 import 'package:arzenafees/Components/Constants.dart';
-import 'package:arzenafees/model/areaguide.dart';
-import 'package:arzenafees/services/areaguideapi.dart';
+import 'package:arzenafees/model/areaview.dart';
+import 'package:arzenafees/services/areaviewapi.dart';
 import 'package:flutter/material.dart';
 
 class VerticalCards extends StatelessWidget {
-  List<Areaguide> areaData;
+  List<Areaview> areaData;
   VerticalCards(this.areaData);
   @override
   Widget build(BuildContext context) {

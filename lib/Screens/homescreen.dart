@@ -1,8 +1,9 @@
 // ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, prefer_const_literals_to_create_immutables, unnecessary_new
 import 'package:arzenafees/Components/Export/custom_import.dart';
 import 'package:arzenafees/Components/vertical_cards.dart';
+import 'package:arzenafees/Screens/areaguidescreen.dart';
 import 'package:arzenafees/Screens/nointernetscreen.dart';
-import 'package:arzenafees/services/areaguideapi.dart';
+import 'package:arzenafees/services/areaviewapi.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -476,7 +477,16 @@ class _HomeScreenState extends State<HomeScreen> {
             height: 50,
             width: 250,
             child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).push(
+                    Transitions(
+                        transitionType: TransitionType.fade,
+                        curve: Curves.bounceInOut,
+                        duration: const Duration(milliseconds: 500),
+                        reverseCurve: Curves.bounceOut,
+                        widget: areaguide()),
+                  );
+                },
                 style: ElevatedButton.styleFrom(
                   shape: new RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(10.0),

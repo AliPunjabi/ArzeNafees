@@ -6,6 +6,7 @@ import 'package:arzenafees/Components/Export/custom_import.dart';
 import 'package:arzenafees/model/addproperty.dart';
 import 'package:arzenafees/model/areasubtype.dart';
 import 'package:arzenafees/services/addpropertyapi.dart';
+import 'package:arzenafees/services/areaguideapi.dart';
 import 'package:arzenafees/services/areasubtypeapi.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -68,6 +69,7 @@ class _addPropertyScreenState extends State<addPropertyScreen> {
   @override
   initState() {
     super.initState();
+    fetchareaguide();
     initialSubtype().whenComplete(() => print("complete"));
   }
 
