@@ -1,9 +1,13 @@
 // ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, prefer_const_literals_to_create_immutables, unnecessary_new
+import 'dart:convert';
+
 import 'package:arzenafees/Components/Export/custom_import.dart';
 import 'package:arzenafees/Components/vertical_cards.dart';
 import 'package:arzenafees/Screens/areaguidescreen.dart';
 import 'package:arzenafees/Screens/nointernetscreen.dart';
+import 'package:arzenafees/model/areaview.dart';
 import 'package:arzenafees/services/areaviewapi.dart';
+import 'package:http/http.dart' as http;
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -396,7 +400,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 if (!snapshot.hasData) {
                   return Center(child: CircularProgressIndicator());
                 } else {
-                  return VerticalCards(snapshot.data);
+                  final data = snapshot.data;
+                  return VerticalCards(data);
+                  //return VerticalCards(snapshot.data);
                 }
               },
             ),

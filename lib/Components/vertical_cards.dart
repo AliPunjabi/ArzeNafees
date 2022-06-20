@@ -6,7 +6,7 @@ import 'package:arzenafees/services/areaviewapi.dart';
 import 'package:flutter/material.dart';
 
 class VerticalCards extends StatelessWidget {
-  List<Areaview> areaData;
+  List<Property> areaData;
   VerticalCards(this.areaData);
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class VerticalCards extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         itemCount: areaData.length,
         itemBuilder: (context, index) {
-          final String? image = areaData[index].propertyImage;
+          final String? image = areaData[index].propertyImage.toString();
 
           return Container(
               // width: MediaQuery.of(context).size.width * 0.6,
@@ -37,7 +37,9 @@ class VerticalCards extends StatelessWidget {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(15.0)),
                           image: DecorationImage(
-                            image: NetworkImage(image!),
+                            image: NetworkImage(
+                                "https://arz-e-nafees.nafeessolutions.com" +
+                                    "$image"),
                             fit: BoxFit.fill,
                           ),
                         ),
