@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, must_be_immutable, use_key_in_widget_constructors, sized_box_for_whitespace
 
 import 'package:arzenafees/Components/Constants.dart';
+import 'package:arzenafees/Screens/areaguidescreen.dart';
 import 'package:arzenafees/model/areaview.dart';
 import 'package:arzenafees/services/areaviewapi.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +32,14 @@ class VerticalCards extends StatelessWidget {
                   width: 300,
                   height: 180,
                   child: GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      fetcharea();
+                      Navigator.push(context, MaterialPageRoute(
+                        builder: (_) {
+                          return areaguide(areaData[index]);
+                        },
+                      ));
+                    },
                     child: Stack(alignment: Alignment.bottomLeft, children: [
                       Container(
                         decoration: BoxDecoration(

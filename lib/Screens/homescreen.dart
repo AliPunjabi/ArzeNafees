@@ -484,14 +484,14 @@ class _HomeScreenState extends State<HomeScreen> {
             width: 250,
             child: ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context).push(
+                  /* Navigator.of(context).push(
                     Transitions(
                         transitionType: TransitionType.fade,
                         curve: Curves.bounceInOut,
                         duration: const Duration(milliseconds: 500),
                         reverseCurve: Curves.bounceOut,
-                        widget: areaguide()),
-                  );
+                        widget: 
+                  );*/
                 },
                 style: ElevatedButton.styleFrom(
                   shape: new RoundedRectangleBorder(

@@ -69,7 +69,7 @@ class _addPropertyScreenState extends State<addPropertyScreen> {
   @override
   initState() {
     super.initState();
-    fetchareaguide();
+
     initialSubtype().whenComplete(() => print("complete"));
   }
 
